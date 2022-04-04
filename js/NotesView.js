@@ -98,4 +98,17 @@ export default class NotesView {
         });
       });
   }
+
+  updateActiveNote(note) {
+    this.root.querySelector(".notes_title").value = note.title;
+    this.root.querySelector(".notes_body").value = note.body;
+
+    this.root.querySelectorAll(".notes_list_item").forEach((noteListItem) => {
+      noteListItem.classList.remove(".note_list_item_selected");
+    });
+
+    this.root
+      .querySelector(`.notes_list_item[data-note-id="${note.id}"]`)
+      .classList.add(".note_list_item_selected");
+  }
 }

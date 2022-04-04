@@ -46,7 +46,7 @@ export default class NotesView {
     const MAX_BODY_LENGTH = 60;
 
     return `
-      <div class="notes_list_item" data-node-id="${id}">
+      <div class="notes_list_item" data-note-id="${id}">
         <div class="notes_item_title">
           ${title}
         </div>
@@ -62,5 +62,40 @@ export default class NotesView {
         </div>
       </div>
     `;
+  }
+
+  updateNotesList(notes) {
+    const notesListContainer = this.root.querySelector(".notes_list");
+
+    notesListContainer.innerHTML = "";
+
+    for (const note of notes) {
+      const html = this._createListItemHTML(
+        note.id,
+        note.title,
+        note.body,
+        new Date(note.updated)
+      );
+
+      notesListContainer.insertAdjacentHTML("beforeend", html);
+    }
+
+    notesListContainer
+      .querySelectorAll(".notes_list_item")
+      .forEach((noteListItem) => {
+        noteListItem.addEventListener("click", () => {
+          this.onNoteSelect(noteListItem.dataset.noteId);
+        });
+
+        noteListItem.addEventListener("dblclick", () => {
+          const doDelete = confirm(
+            "Are you sure you want to delete this note?"
+          );
+
+          if (doDelete) {
+            this.onNoteDelete(noteListItem.dataset.noteId);
+          }
+        });
+      });
   }
 }

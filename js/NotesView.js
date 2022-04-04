@@ -37,9 +37,7 @@ export default class NotesView {
       });
     });
 
-    console.log(
-      this._createListItemHTML(300, "hey there", "is this working", new Date())
-    );
+    this.updateNotePreviewVisibility(false);
   }
 
   _createListItemHTML(id, title, body, updated) {
@@ -110,5 +108,11 @@ export default class NotesView {
     this.root
       .querySelector(`.notes_list_item[data-note-id="${note.id}"]`)
       .classList.add(".note_list_item_selected");
+  }
+
+  updateNotePreviewVisibility(visible) {
+    this.root.querySelector(".notes_preview").style.visibility = visible
+      ? "visible"
+      : "hidden";
   }
 }

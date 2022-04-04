@@ -36,5 +36,31 @@ export default class NotesView {
         this.onNoteEdit(updatedTitle, updatedBody);
       });
     });
+
+    console.log(
+      this._createListItemHTML(300, "hey there", "is this working", new Date())
+    );
+  }
+
+  _createListItemHTML(id, title, body, updated) {
+    const MAX_BODY_LENGTH = 60;
+
+    return `
+      <div class="notes_list_item" data-node-id="${id}">
+        <div class="notes_item_title">
+          ${title}
+        </div>
+        <div class="notes_item_body">
+          ${body.substring(0, MAX_BODY_LENGTH)}
+          ${body.length > MAX_BODY_LENGTH ? "..." : ""}
+        </div>
+        <div class="notes_item_updated">
+          ${updated.toLocaleString(undefined, {
+            dateStyle: "full",
+            timeStyle: "short",
+          })}
+        </div>
+      </div>
+    `;
   }
 }
